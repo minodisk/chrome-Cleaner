@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cleaner Options</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="styles/button.css">
+  <link rel="stylesheet" href="styles/checkbox.css">
+  <link rel="stylesheet" href="styles/list.css">
+  <link rel="stylesheet" href="styles/chrome_shared.css">
+  <link rel="stylesheet" href="styles/select.css">
+  <link rel="stylesheet" href="styles/spinner.css">
+  <link rel="stylesheet" href="styles/throbber.css">
+  <link rel="stylesheet" href="styles/tree.css">
+  <style>
+    .displaytable {
+      display : table;
+      width   : 100%;
+    }
+
+    .displaytable > section {
+      display : table-row;
+    }
+
+    .displaytable > section > h3 + div,
+    .displaytable > section > h3 + table {
+      padding-bottom : 20px;
+    }
+
+    .displaytable > section > h3 {
+      padding-top : 17px;
+    }
+
+    .displaytable > section > * {
+      display        : table-cell;
+      vertical-align : baseline;
+      border-bottom  : 1px solid #eeeeee;
+    }
+
+    .displaytable:not([searching='true']) > section:last-child > * {
+      border-bottom : none;
+    }
+
+    #clear-data-checkboxes {
+      -webkit-padding-start : 8px;
+      margin                : 5px 0;
+    }
+  </style>
+  <script type="text/javascript" src="scripts/options.js"></script>
+</head>
+<body class="page">
+<h1>Cleaner Options</h1>
+
+<div class="displaytable">
+  <section>
+    <h3>Button Action</h3>
+
+    <div>
+      <label><span>Obliterate the following items from:</span>
+        <select name="period">
+          <option value="last_hour">the past hour</option>
+          <option value="last_day">the past day</option>
+          <option value="last_week">the past week</option>
+          <option value="last_month">the past month</option>
+          <option value="everything" selected>the beginning of time</option>
+        </select>
+      </label>
+
+      <div id="clear-data-checkboxes">
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" name="history"/><span>Clear browsing history</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" name="downloads"/><span>Clear download history</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" name="cache"/><span>Empty the cache</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" name="cookies"/><span>Delete cookies and other site and plug-in data</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" name="passwords"/><span>Clear saved passwords</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" name="formData"/><span>Clear saved Autofill form data</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+</body>
+</html>
