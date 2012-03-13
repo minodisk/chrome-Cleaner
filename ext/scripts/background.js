@@ -19,7 +19,6 @@
       return value;
     },
     set: function(key, value) {
-      console.log(localStorage);
       return localStorage[key] = JSON.stringify(value);
     }
   };
