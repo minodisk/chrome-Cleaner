@@ -14,7 +14,6 @@ get: (key)->
     value = JSON.parse value
   value
 set: (key, value)->
-  console.log localStorage
   localStorage[key] = JSON.stringify value
 
 do ->
