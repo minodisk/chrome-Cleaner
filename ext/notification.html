@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      font-size : 11px;
+      margin    : 5px;
+    }
+
+    div {
+      float : left;
+    }
+
+    div:first-child {
+      width : 55px;
+    }
+
+    div:last-child {
+      width : 230px;
+    }
+
+    h1 {
+      margin      : 0;
+      font-size   : 12px;
+      line-height : 1.2em;
+    }
+
+    span, li {
+      display : none;
+    }
+
+    ul {
+      margin          : 5px 0 5px 5px;
+      list-style-type : none;
+      padding-left    : 0;
+      font-size       : 11px;
+      line-height     : 1.1em;
+    }
+
+    li:before {
+      content : '- '
+    }
+  </style>
+  <script type="text/javascript" src="scripts/notification.js"></script>
+</head>
+<body>
+
+<div>
+  <img src="images/icon48.png">
+</div>
+<div>
+  <h1>Obliterate the following items from <span id="last_hour">the past hour</span><span id="last_day">the past day</span><span id="last_week">the past week</span><span id="last_month">the past month</span><span id="everything">the beginning of time</span></h1>
+  <ul>
+    <li id="history">browsing history</li>
+    <li id="downloads">download history</li>
+    <li id="cache">cache</li>
+    <li id="cookies">cookies and other site and plug-in data</li>
+    <li id="passwords">saved passwords</li>
+    <li id="formData">saved Autofill form data</li>
+  </ul>
+</div>
+
+</body>
+</html>

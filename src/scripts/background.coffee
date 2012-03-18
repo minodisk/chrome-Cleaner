@@ -1,20 +1,20 @@
 DEFAULT =
-  period: 'everything'
-  cache: true
-  cookies: false
+  period   : 'everything'
+  history  : true
   downloads: true
-  formData: false
-  history: true
+  cache    : true
+  cookies  : false
   passwords: false
+  formData : false
 
 window.storage =
-get: (key)->
-  value = localStorage[key]
-  if value?
-    value = JSON.parse value
-  value
-set: (key, value)->
-  localStorage[key] = JSON.stringify value
+  get: (key)->
+    value = localStorage[key]
+    if value?
+      value = JSON.parse value
+    value
+  set: (key, value)->
+    localStorage[key] = JSON.stringify value
 
 do ->
   for key, value of DEFAULT
@@ -22,11 +22,14 @@ do ->
       storage.set key, value
 
 chrome.browserAction.onClicked.addListener (tab)->
-  chrome.experimental.clear.browsingData storage.get('period'), {
-  cache: storage.get 'cache'
-  cookies: storage.get 'cookies'
-  downloads: storage.get 'downloads'
-  formData: storage.get 'formData'
-  history: storage.get 'history'
-  passwords: storage.get 'passwords'
-  }
+  data =
+    period      : storage.get 'period'
+    dataToRemove:
+      history  : storage.get 'history'
+      downloads: storage.get 'downloads'
+      cache    : storage.get 'cache'
+      cookies  : storage.get 'cookies'
+      passwords: storage.get 'passwords'
+      formData : storage.get 'formData'
+  chrome.experimental.clear.browsingData data.period, data.dataToRemove, ->
+    webkitNotifications.createHTMLNotification("notification.html##{JSON.stringify(data)}").show()

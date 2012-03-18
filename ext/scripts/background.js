@@ -3,12 +3,12 @@
 
   DEFAULT = {
     period: 'everything',
+    history: true,
+    downloads: true,
     cache: true,
     cookies: false,
-    downloads: true,
-    formData: false,
-    history: true,
-    passwords: false
+    passwords: false,
+    formData: false
   };
 
   window.storage = {
@@ -38,13 +38,20 @@
   })();
 
   chrome.browserAction.onClicked.addListener(function(tab) {
-    return chrome.experimental.clear.browsingData(storage.get('period'), {
-      cache: storage.get('cache'),
-      cookies: storage.get('cookies'),
-      downloads: storage.get('downloads'),
-      formData: storage.get('formData'),
-      history: storage.get('history'),
-      passwords: storage.get('passwords')
+    var data;
+    data = {
+      period: storage.get('period'),
+      dataToRemove: {
+        history: storage.get('history'),
+        downloads: storage.get('downloads'),
+        cache: storage.get('cache'),
+        cookies: storage.get('cookies'),
+        passwords: storage.get('passwords'),
+        formData: storage.get('formData')
+      }
+    };
+    return chrome.experimental.clear.browsingData(data.period, data.dataToRemove, function() {
+      return webkitNotifications.createHTMLNotification("notification.html#" + (JSON.stringify(data))).show();
     });
   });
 
