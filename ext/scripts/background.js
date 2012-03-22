@@ -55,12 +55,14 @@
   BrowsingData = (function() {
 
     function BrowsingData(_storage) {
-      var _this = this;
       this._storage = _storage;
-      chrome.browserAction.onClicked.addListener(function() {
-        return _this.clear(_this._storage.getData());
-      });
+      this.clearWithStorageData = __bind(this.clearWithStorageData, this);
+      chrome.browserAction.onClicked.addListener(this.clearWithStorageData);
     }
+
+    BrowsingData.prototype.clearWithStorageData = function() {
+      return this.clear(this._storage.getData());
+    };
 
     BrowsingData.prototype.clear = function(data) {
       if (data.period == null) data.period = this._storage.get('period');
@@ -123,16 +125,28 @@
     };
 
     Omnibox.prototype._clear = function(text) {
-      var data, flag, keyword, _ref;
-      data = {
-        dataToRemove: {}
-      };
-      _ref = Omnibox.FLAGS;
-      for (flag in _ref) {
-        keyword = _ref[flag].keyword;
-        data.dataToRemove[keyword] = text.indexOf(flag) !== -1;
+      var data, flag, keyword, _ref, _ref2;
+      if (text === '') {
+        return this._browsingData.clearWithStorageData();
+      } else {
+        data = {
+          dataToRemove: {}
+        };
+        if (text.indexOf('a') !== -1) {
+          _ref = Omnibox.FLAGS;
+          for (flag in _ref) {
+            keyword = _ref[flag].keyword;
+            data.dataToRemove[keyword] = true;
+          }
+        } else {
+          _ref2 = Omnibox.FLAGS;
+          for (flag in _ref2) {
+            keyword = _ref2[flag].keyword;
+            data.dataToRemove[keyword] = text.indexOf(flag) !== -1;
+          }
+        }
+        return this._browsingData.clear(data);
       }
-      return this._browsingData.clear(data);
     };
 
     return Omnibox;

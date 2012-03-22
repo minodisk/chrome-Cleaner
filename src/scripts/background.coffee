@@ -38,8 +38,10 @@ class Storage
 class BrowsingData
 
   constructor: (@_storage)->
-    chrome.browserAction.onClicked.addListener =>
-      @clear @_storage.getData()
+    chrome.browserAction.onClicked.addListener @clearWithStorageData
+
+  clearWithStorageData: =>
+    @clear @_storage.getData()
 
   clear: (data)->
     unless data.period?
@@ -53,12 +55,12 @@ class Omnibox
 
   @FLAGS: do ->
     FLAGS =
-    h: 'history'
-    d: 'downloads'
-    c: 'cache'
-    k: 'cookies'
-    p: 'passwords'
-    f: 'formData'
+      h: 'history'
+      d: 'downloads'
+      c: 'cache'
+      k: 'cookies'
+      p: 'passwords'
+      f: 'formData'
     for flag, keyword of FLAGS
       i = keyword.indexOf flag
       FLAGS[flag] =
@@ -88,11 +90,18 @@ class Omnibox
     }
 
   _clear: (text)=>
-    data =
-    dataToRemove: {}
-    for flag, { keyword } of Omnibox.FLAGS
-      data.dataToRemove[keyword] = text.indexOf(flag) isnt -1
-    @_browsingData.clear data
+    if text is ''
+      @_browsingData.clearWithStorageData()
+    else
+      data =
+        dataToRemove: {}
+      if text.indexOf('a') isnt -1
+        for flag, { keyword } of Omnibox.FLAGS
+          data.dataToRemove[keyword] = true
+      else
+        for flag, { keyword } of Omnibox.FLAGS
+          data.dataToRemove[keyword] = text.indexOf(flag) isnt -1
+      @_browsingData.clear data
 
 @storage = new Storage()
 @browsingData = new BrowsingData @storage
